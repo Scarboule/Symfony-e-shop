@@ -22,6 +22,16 @@
             {{ product.name }}
         </div>
         <div>{{ product.price }}</div>
-        <div>{{ product.description }}</div>
+        <div>{{ category.name }}</div>
+
+    </div>
+
+    <div>
+        <h2>Other products in the same category:</h2>
+        {% for otherProduct in otherProducts %}
+            <div>
+                {{ otherProduct.name }} - {{ otherProduct.price }}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

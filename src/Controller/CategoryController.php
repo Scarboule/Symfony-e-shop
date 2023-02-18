@@ -59,19 +59,4 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    /*#[Route('/category/{id}', name: 'category_show')]
-
-    public function index($id, Request $request, ProductCategory $productCategory, ProductCategoryRepository $productCategoryRepository)
-    {
-        $category = $productCategoryRepository->find($id);
-        $sortDirection = $request->query->get('sort-direction', 'asc'); // valeur par défaut : tri ascendant
-        $products = $productRepository->findBy([$id], ['price' => $sortDirection]);
-
-        return $this->render('products/index.html.twig', [
-
-            'category' => $category,
-            'products' => $products,
-            'controller_name' => 'CategoryController'
-        ]);
-    }*/
 }
