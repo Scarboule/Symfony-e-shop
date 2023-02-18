@@ -17,7 +17,20 @@
         <li>Your template at <code><a href="{{ 'C:/laragon/www/Symfony/rendu/templates/category/index.html.twig'|file_link(0) }}">templates/category/index.html.twig</a></code></li>
     </ul>
 </div>
+
+    <a href="{{ path('category_show_sorted', {id: category.id, sort: 'asc'}) }}">Trier par prix croissant</a>
+    <a href="{{ path('category_show_sorted', {id: category.id, sort: 'desc'}) }}">Trier par prix décroissant</a>
+
     <div>
         {{ category.name }}
+    </div>
+    <div class="row">
+        {% for product in products %}
+
+        <div>
+            <a href="/product/{{ product.id }}"> {{ product.name }}//{{ product.price }}</a>
+        </div>
+
+        {% endfor %}
     </div>
 {% endblock %}
