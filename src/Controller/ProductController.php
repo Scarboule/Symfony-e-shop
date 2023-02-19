@@ -40,7 +40,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/new/product', name: 'product_new')]
+    /*#[Route('/new/product', name: 'product_new')]
     public function new(Request $request)
     {
         $product = new Product();
@@ -59,34 +59,16 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    /*public function new(Request $request): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
-        }
-
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
-    }*/
-
-    #[Route('/product/{id}/edit', name: 'product_edit')]
+    #[Route('/product/{id}/edit', name: 'product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('product_show', ['id' => $product->getId()]);
         }
@@ -97,17 +79,16 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/product/{id}', name: 'product_delete', methods: ['POST'])]
+    #[Route('/product/{id}/delete', name: 'product_delete')]
     public function delete(Request $request, Product $product): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($product);
-            $entityManager->flush();
+            $this->entityManager->remove($product);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('app_index');
-    }
+    }*/
 
 
 }
