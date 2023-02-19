@@ -17,7 +17,20 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        //Creating 1 admin
+        $admin = new User();
+        $admin->setName('Admin');
+        $admin->setEmail('admin@gmail.com');
+        $admin->setPassword(
+            $this->passwordHasher->hashPassword($admin, ('admin'))
+        );
+        $admin->setRoles([
+            'ROLE_ADMIN'
+        ]);
+        $manager->persist($admin);
+        $manager->flush();
 
+        //50 Users
         $names = array("Emma", "Olivia", "Ava", "Isabella", "Sophia", "Mia", "Charlotte", "Amelia", "Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Avery", "Ella", "Madison", "Scarlett", "Victoria", "Aubrey", "Grace", "Chloe", "Camila", "Penelope", "Riley", "Layla", "Lillian", "Natalie", "Aaliyah", "Hazel", "Lucy", "Audrey", "Mila", "Nova", "Willow", "Luna", "Savannah", "Aurora", "Sofia", "Eleanor", "Genesis", "Makayla", "Ariel", "Aurora", "Adalynn", "Arianna", "Allison", "Violet", "Kaylee", "Jackson", "Aiden", "Liam", "Oliver", "Elijah", "Mason", "Noah", "Ethan", "Logan", "James", "Benjamin", "Lucas", "Michael", "Alexander", "William", "Daniel", "Matthew", "Samuel");
 
         for($i = 0; $i < 50; $i++){
@@ -29,10 +42,14 @@ class AppFixtures extends Fixture
             $user->setPassword(
                 $this->passwordHasher->hashPassword($user, ($name . 'password'))
             );
+            $user->setRoles([
+                'ROLE_USER'
+            ]);
             $manager->persist($user);
         }
         $manager->flush();
 
+        //10 Categories
         for($i = 0; $i < 10; $i++){
             $productCategory = new ProductCategory();
             $productCategory->setName('Category' . $i);
@@ -41,6 +58,7 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
+        //20 products per categories
         $categories = $manager->getRepository(ProductCategory::class)->findAll();
         foreach ($categories as $category){
             for($i = 0; $i < 20; $i++){
